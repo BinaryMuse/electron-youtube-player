@@ -10,6 +10,8 @@ import { autobind } from "core-decorators";
 import reducer from "./redux/reducer";
 import * as actions from "./redux/actions";
 
+import YoutubeThumbnail from "./components/youtube_thumbnail";
+
 const finalCreateStore = compose(
   devTools()
 )(createStore);
@@ -31,17 +33,6 @@ function youtubeIdToThumbnailUrl(videoId) {
   return `http://img.youtube.com/vi/${videoId}/0.jpg`;
 }
 
-class YoutubeThumbnail extends React.Component {
-  render() {
-    const { videoId, ...props } = this.props;
-
-    return <img src={youtubeIdToThumbnailUrl(videoId)} {...props} />;
-  }
-}
-
-YoutubeThumbnail.propTypes = {
-  videoId: React.PropTypes.string.isRequired,
-};
 
 class YoutubePlayer extends React.Component {
   // gross
