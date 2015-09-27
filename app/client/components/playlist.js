@@ -57,11 +57,14 @@ export default class Playlist extends React.Component {
 
   @autobind
   handleAddVideoClicked() {
+    // TODO: get this into a managed input,
+    // or a modal, etc.
     const videoUrl = this.refs.videoId.value;
     const parsed = url.parse(videoUrl);
     const queryParsed = qs.parse(parsed.query);
     if (queryParsed.v) {
       this.props.onAddVideo(queryParsed.v);
+      this.refs.videoId.value = "";
     }
   }
 

@@ -5,26 +5,15 @@ import { connect } from "react-redux";
 import * as actions from "../redux/actions";
 
 import CurrentlyPlaying from "./currently_playing";
+import PlaybackControlBar from "./playback_control_bar";
 import Playlist from "./playlist";
 import YoutubePlayer from "./youtube_player";
 import YoutubeThumbnail from "./youtube_thumbnail";
 
 
-
-function secondsDisplay(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainSeconds = seconds % 60;
-
-  let secondsStr = `${remainSeconds}`;
-  if (secondsStr.length === 1) {
-    secondsStr = "0" + secondsStr;
-  }
-
-  return `${minutes}:${secondsStr}`;
-}
-
 @connect(state => ({
   ...state,
+  isPlaying: state.playbackStatus === "PLAYING",
   currentVideoDuration: state.videoDurations[state.currentVideoId] || 0
 }), actions)
 export default class Application extends React.Component {
@@ -53,15 +42,10 @@ export default class Application extends React.Component {
                          onUpdateVideoDuration={this.props.updateVideoDuration}
                          onUpdateCurrentTime={this.updateCurrentTime}
                          onVideoEnded={this.props.selectNextVideo} />
-          <div style={{flex: "0 0 50px"}}>
-            <input type="range" min={0} max={this.props.currentVideoDuration}
-                   value={this.state.currentTime} onChange={this.seekVideo} />
-            <div>
-              {secondsDisplay(this.state.currentTime)} / {secondsDisplay(this.props.currentVideoDuration)}
-              <button onClick={this.playVideo}>Play</button>
-              <button onClick={this.pauseVideo}>Pause</button>
-            </div>
-          </div>
+          <PlaybackControlBar videoDuration={this.props.currentVideoDuration}
+                              currentTime={this.state.currentTime}
+                              playing={this.props.isPlaying} onSeek={this.seekVideo}
+                              onPlay={this.playVideo} onPause={this.pauseVideo} />
         </div>
       </div>
     );
@@ -78,8 +62,7 @@ export default class Application extends React.Component {
   }
 
   @autobind
-  seekVideo(evt) {
-    const time = parseInt(evt.target.value, 10);
+  seekVideo(time) {
     this.refs.player.seek(time);
   }
 

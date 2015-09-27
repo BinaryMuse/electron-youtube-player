@@ -2,9 +2,9 @@ const initialState = {
   playlist: [
     // "VJdi9SDlVhU",
     // "h_aKALHPRmU",
-    "AVpvIBLEhMg"
+    "trvnP7EsAHA"
   ],
-  currentVideoId: "AVpvIBLEhMg",
+  currentVideoId: "trvnP7EsAHA",
   playbackStatus: "PAUSED",
   videoDurations: {}, // id => duration
 };
