@@ -12,6 +12,13 @@ export const updatePlaybackStatus = (status) => {
   };
 }
 
+export const updateVideoDuration = (videoId, duration) => {
+  return {
+    type: "UPDATE_VIDEO_DURATION",
+    videoId, duration
+  };
+};
+
 export const addVideoToPlaylist = (videoId) => {
   return {
     type: "ADD_VIDEO",

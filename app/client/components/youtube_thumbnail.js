@@ -1,6 +1,8 @@
 import React from "react";
 
-class YoutubeThumbnail extends React.Component {
+import { youtubeIdToThumbnailUrl } from "../utils";
+
+export default class YoutubeThumbnail extends React.Component {
   render() {
     const { videoId, ...props } = this.props;
 

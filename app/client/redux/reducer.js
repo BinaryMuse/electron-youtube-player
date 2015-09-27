@@ -6,6 +6,9 @@ export default function reduce(state = null, action) {
         playbackStatus: action.status
       };
     case "ADD_VIDEO":
+      if (state.playlist.includes(action.videoId)) {
+        return state;
+      }
       return {
         ...state,
         playlist: state.playlist.concat([action.videoId])
@@ -14,6 +17,14 @@ export default function reduce(state = null, action) {
       return {
         ...state,
         playlist: state.playlist.filter(id => id !== action.videoId)
+      };
+    case "UPDATE_VIDEO_DURATION":
+      return {
+        ...state,
+        videoDurations: {
+          ...state.videoDurations,
+          [action.videoId]: action.duration
+        }
       };
     default:
       return state;

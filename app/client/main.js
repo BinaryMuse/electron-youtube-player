@@ -23,16 +23,12 @@ const initialState = {
     "AVpvIBLEhMg"
   ],
   currentVideoId: "AVpvIBLEhMg",
-  playbackStatus: "PAUSED"
+  playbackStatus: "PAUSED",
+  // id => duration
+  videoDurations: {}
 };
 
 const store = finalCreateStore(reducer, initialState);
-
-
-function youtubeIdToThumbnailUrl(videoId) {
-  return `http://img.youtube.com/vi/${videoId}/0.jpg`;
-}
-
 
 class YoutubePlayer extends React.Component {
   // gross
@@ -47,6 +43,7 @@ class YoutubePlayer extends React.Component {
         events: {
           'onReady': (event) => {
             // event.target.playVideo();
+            this.props.onUpdateVideoDuration(this.props.videoId, player.getDuration());
             setInterval(() => {
               this.props.onUpdateCurrentTime(player.getCurrentTime());
             }, 200);
@@ -77,6 +74,7 @@ YoutubePlayer.propTypes = {
   videoId: React.PropTypes.string.isRequired,
   onUpdateCurrentTime: React.PropTypes.func.isRequired,
   onUpdatePlaybackStatus: React.PropTypes.func.isRequired,
+  onUpdateVideoDuration: React.PropTypes.func.isRequired,
 };
 
 class Playlist extends React.Component {
@@ -123,7 +121,10 @@ CurrentlyPlaying.propTypes = {
   videoId: React.PropTypes.string,
 };
 
-@connect(state => state, actions)
+@connect(state => ({
+  ...state,
+  currentVideoDuration: state.videoDurations[state.currentVideoId] || 0
+}), actions)
 class Application extends React.Component {
   constructor(props) {
     super(props);
@@ -143,8 +144,15 @@ class Application extends React.Component {
         <div style={{flexBasis: "100%", display: "flex", flexDirection: "column"}}>
           <YoutubePlayer videoId={this.props.currentVideoId}
                          onUpdatePlaybackStatus={this.props.updatePlaybackStatus}
+                         onUpdateVideoDuration={this.props.updateVideoDuration}
                          onUpdateCurrentTime={this.updateCurrentTime} />
-          <div style={{flex: "0 0 50px"}}>{this.state.currentTime}</div>
+          <div style={{flex: "0 0 50px"}}>
+            <input type="range" min={0} max={this.props.currentVideoDuration}
+                   value={this.state.currentTime} />
+            <div>
+              {this.state.currentTime} / {this.props.currentVideoDuration}
+            </div>
+          </div>
         </div>
       </div>
     );
