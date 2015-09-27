@@ -1,3 +1,16 @@
+export const selectVideo = (videoId) => {
+  return {
+    type: "SELECT_VIDEO",
+    videoId: videoId
+  };
+}
+
+export const selectNextVideo = () => {
+  return {
+    type: "SELECT_NEXT_VIDEO"
+  };
+};
+
 export const updateCurrentTime = (newTime) => {
   return {
     type: "UPDATE_CURRENT_TIME",
