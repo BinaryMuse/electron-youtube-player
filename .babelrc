@@ -1,0 +1,17 @@
+{
+  // Don't inherit from higher-level .babelrc files
+  "breakConfig": true,
+  "stage": 2,
+  "optional": [
+    "es7.decorators"
+  ],
+  "env": {
+    "production": {
+      "optional": [
+        "optimisation.react.constantElements",
+        "optimisation.react.inlineElements"
+        // "minification.removeConsole" // removes `console.log` lines
+      ]
+    }
+  }
+}
