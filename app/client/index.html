@@ -11,6 +11,36 @@
       width: 100%;
       height: 100%;
     }
+
+
+    /* Custom slider CSS */
+    input[type=range].slider {
+      -webkit-appearance: none;
+      background-color: transparent;
+    }
+
+    input[type=range].slider:focus {
+      outline: none;
+    }
+
+    input[type=range].slider::-webkit-slider-runnable-track {
+      -webkit-appearance: none;
+      position: relative;
+      height: 6px;
+      background-color: #777;
+      border-radius: 5px;
+    }
+
+    input[type=range].slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      position: absolute;
+      top: -4px;
+      width: 8px;
+      height: 15px;
+      background-color: #777;
+      border: 1px solid #fff;
+      border-radius: 10px;
+    }
     </style>
   </head>
   <body>
