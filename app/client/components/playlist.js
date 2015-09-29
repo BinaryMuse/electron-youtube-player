@@ -106,6 +106,10 @@ export default class Playlist extends React.Component {
       <div style={{flex: "1", overflowY: "scroll"}}>
         {this.props.videoIds.map(this.renderVideoId)}
         <button onClick={this.handleShowAddVideoModalClicked}>Add Video</button>
+        <div>
+          <button onClick={this.handleSavePlaylist}>Save</button>
+          <button onClick={this.handleLoadPlaylist}>Load</button>
+        </div>
         <Modal isOpen={this.state.showingAddModal}
                onRequestClose={this.handleCloseModal}
                title="Add Video to Playlist">
@@ -162,6 +166,21 @@ export default class Playlist extends React.Component {
   handleRemoveVideo(videoId) {
     this.props.onRemoveVideo(videoId);
   }
+
+  @autobind
+  handleSavePlaylist() {
+    require("remote").require("./browser/playlist").savePlaylist(
+      this.props.videoIds
+    );
+  }
+
+  @autobind
+  handleLoadPlaylist() {
+    require("remote").require("./browser/playlist").loadPlaylist(videoIds => {
+      console.log("got video IDs", videoIds);
+      this.props.setPlaylistVideos(videoIds);
+    });
+  }
 }
 
 Playlist.propTypes = {
@@ -171,4 +190,5 @@ Playlist.propTypes = {
   onSelectVideo: React.PropTypes.func.isRequired, // fn(videoId)
   onAddVideo: React.PropTypes.func.isRequired, // fn(videoId)
   onRemoveVideo: React.PropTypes.func.isRequired, // fn(videoId)
+  setPlaylistVideos: React.PropTypes.func.isRequired, // fn([videoId])
 };

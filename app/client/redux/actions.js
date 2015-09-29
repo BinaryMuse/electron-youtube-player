@@ -16,3 +16,4 @@ export const updatePlaybackStatus = actionCreator("UPDATE_PLAYBACK_STATUS", "sta
 export const updateVideoDuration = actionCreator("UPDATE_VIDEO_DURATION", "videoId", "duration");
 export const addVideoToPlaylist = actionCreator("ADD_VIDEO", "videoId");
 export const removeVideoFromPlaylist = actionCreator("REMOVE_VIDEO", "videoId");
+export const setPlaylistVideos = actionCreator("SET_PLAYLIST_VIDEOS", "videoIds");

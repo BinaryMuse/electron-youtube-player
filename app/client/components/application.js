@@ -32,7 +32,8 @@ export default class Application extends React.Component {
           <Playlist videoIds={this.props.playlist}
                     onAddVideo={this.props.addVideoToPlaylist}
                     onRemoveVideo={this.props.removeVideoFromPlaylist}
-                    onSelectVideo={this.props.selectVideo} />
+                    onSelectVideo={this.props.selectVideo}
+                    setPlaylistVideos={this.props.setPlaylistVideos} />
           <CurrentlyPlaying videoId={this.props.currentVideoId} />
         </div>
         <div style={{flexBasis: "100%", display: "flex", flexDirection: "column"}}>

@@ -65,6 +65,12 @@ export function playlistReducer(state = initialState, action) {
         playlist: newPlaylist,
         currentVideoId: newVideoId
       };
+    case "SET_PLAYLIST_VIDEOS":
+      return {
+        ...state,
+        playlist: action.videoIds,
+        currentVideoId: action.videoIds[0]
+      };
     default:
       return state;
   }
