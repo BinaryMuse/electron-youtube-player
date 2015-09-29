@@ -1,3 +1,5 @@
+const savedVolume = parseInt(window.localStorage.getItem('initialVolume'), 10);
+
 const initialState = {
   playlist: [
     // "VJdi9SDlVhU",
@@ -7,6 +9,7 @@ const initialState = {
   currentVideoId: "trvnP7EsAHA",
   playbackStatus: "PAUSED",
   videoDurations: {}, // id => duration
+  volume: Number.isNaN(savedVolume) ? 100 : savedVolume,
 };
 
 export function playlistReducer(state = initialState, action) {
@@ -29,6 +32,12 @@ export function playlistReducer(state = initialState, action) {
       return {
         ...state,
         currentVideoId: nextVideoId
+      };
+    case "SET_VOLUME":
+      window.localStorage.setItem('initialVolume', action.volume);
+      return {
+        ...state,
+        volume: action.volume
       };
     case "ADD_VIDEO":
       {

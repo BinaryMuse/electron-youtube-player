@@ -10,6 +10,7 @@ function actionCreator(type, ...argNames) {
 
 export const selectVideo = actionCreator("SELECT_VIDEO", "videoId");
 export const selectNextVideo = actionCreator("SELECT_NEXT_VIDEO");
+export const setVolume = actionCreator("SET_VOLUME", "volume");
 export const updateCurrentTime = actionCreator("UPDATE_CURRENT_TIME", "newTime");
 export const updatePlaybackStatus = actionCreator("UPDATE_PLAYBACK_STATUS", "status");
 export const updateVideoDuration = actionCreator("UPDATE_VIDEO_DURATION", "videoId", "duration");

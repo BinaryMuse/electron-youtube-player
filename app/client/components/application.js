@@ -38,11 +38,13 @@ export default class Application extends React.Component {
         <div style={{flexBasis: "100%", display: "flex", flexDirection: "column"}}>
           <YoutubePlayer ref="player"
                          videoId={this.props.currentVideoId} autoplay={true}
+                         initialVolume={this.props.volume} onSetVolume={this.props.setVolume}
                          onUpdatePlaybackStatus={this.props.updatePlaybackStatus}
                          onUpdateVideoDuration={this.props.updateVideoDuration}
                          onUpdateCurrentTime={this.updateCurrentTime}
                          onVideoEnded={this.props.selectNextVideo} />
           <PlaybackControlBar videoDuration={this.props.currentVideoDuration}
+                              volume={this.props.volume} onSetVolume={this.setVolume}
                               currentTime={this.state.currentTime}
                               playing={this.props.isPlaying} onSeek={this.seekVideo}
                               onPlay={this.playVideo} onPause={this.pauseVideo} />
@@ -64,6 +66,11 @@ export default class Application extends React.Component {
   @autobind
   seekVideo(time, allowSeekAhead = false) {
     this.refs.player.seek(time, allowSeekAhead);
+  }
+
+  @autobind
+  setVolume(volume) {
+    this.refs.player.setVolume(volume);
   }
 
   @autobind

@@ -33,7 +33,9 @@ export default class PlaybackControlBar extends React.Component {
                  onChange={this.handleSeekVideo} />
         </div>
         <div style={{flex: "1 0 100px"}}>
-          <input type="range" className="slider" />
+          <input type="range" className="slider" style={{width: 90}}
+                 min={0} max={100} value={this.props.volume}
+                 onChange={this.handleSetVolume} />
         </div>
       </div>
     );
@@ -54,6 +56,12 @@ export default class PlaybackControlBar extends React.Component {
     const time = parseInt(evt.target.value, 10);
     this.setState({ localCurrentTime: time });
     this.props.onSeek(time, this.state.draggingSeekSlider);
+  }
+
+  @autobind
+  handleSetVolume(evt) {
+    const volume = parseInt(evt.target.value, 10);
+    this.props.onSetVolume(volume);
   }
 }
 

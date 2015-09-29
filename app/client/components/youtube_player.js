@@ -49,8 +49,7 @@ export default class YoutubePlayer extends React.Component {
       playerVars: { 'autoplay': this.props.autoplay, 'controls': 0 },
       events: {
         onReady: (event) => {
-          // tmp
-          player.mute();
+          player.setVolume(this.props.initialVolume);
           this.props.onUpdateVideoDuration(this.props.videoId, player.getDuration());
         },
         onStateChange: (event) => {
@@ -99,6 +98,11 @@ export default class YoutubePlayer extends React.Component {
 
   seek(time) {
     this.player && this.player.seekTo(time, true);
+  }
+
+  setVolume(volume) {
+    this.player && this.player.setVolume(volume);
+    this.props.onSetVolume(volume);
   }
 }
 
