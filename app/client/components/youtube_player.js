@@ -13,7 +13,7 @@ export default class YoutubePlayer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.videoId !== prevProps.videoId) {
-      this.setupPlayer();
+      this.changeVideoId(this.props.videoId);
     }
   }
 
@@ -30,6 +30,14 @@ export default class YoutubePlayer extends React.Component {
     }
 
     this.player = await this.createPlayer(this.props.videoId);
+  }
+
+  async changeVideoId(videoId) {
+    await loadApi();
+
+    if (this.player) {
+      this.player.loadVideoById(videoId);
+    }
   }
 
   createPlayer(videoId) {
@@ -53,6 +61,12 @@ export default class YoutubePlayer extends React.Component {
           if (state === 0) {
             // Video ended, go to the next one
             this.props.onVideoEnded();
+          }
+
+          if (state === 1) {
+            // video just started playing, we should have metadata
+            this.props.onUpdateVideoDuration(this.props.videoId, player.getDuration());
+            console.log("updating");
           }
         }
       }
