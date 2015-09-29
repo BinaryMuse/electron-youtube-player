@@ -25,14 +25,51 @@ const ClickableThumbnail = ({videoId, onClick, onClose}) =>
     <span style={closeButtonStyle} onClick={(evt) => onClose(evt, videoId)}>×</span>
   </div>
 
+
+
+class Modal extends React.Component {
+  render() {
+    const style = {
+      width: 400,
+      height: 100,
+      backgroundColor: "white",
+      display: this.props.isOpen ? "block" : "none",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginLeft: -200,
+    };
+
+    return (
+      <div style={style}>
+        {this.props.children}
+        <hr />
+        <button onClick={this.props.onRequestClose}>Close</button>
+      </div>
+    );
+  }
+}
+
+
 export default class Playlist extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      showingAddModal: false,
+    };
+  }
+
   render() {
     return (
       <div style={{flex: "1 0 100%"}}>
         {this.props.videoIds.map(this.renderVideoId)}
-        <button onClick={this.handleAddVideoClicked}>Add Video</button>
-        {/*cheating*/}
-        <input type="text" ref="videoId" />
+        <button onClick={this.handleShowAddVideoModalClicked}>Add Video</button>
+        <Modal isOpen={this.state.showingAddModal}
+               onRequestClose={this.handleCloseModal}>
+          <button onClick={this.handleAddVideoClicked}>Add Video</button>
+          {/*cheating*/}
+          <input type="text" ref="videoId" />
+        </Modal>
       </div>
     );
   }
@@ -42,6 +79,16 @@ export default class Playlist extends React.Component {
     return <ClickableThumbnail key={videoId} videoId={videoId}
             onClick={this.handleVideoClicked}
             onClose={this.handleVideoCloseClicked} />
+  }
+
+  @autobind
+  handleShowAddVideoModalClicked() {
+    this.setState({ showingAddModal: true });
+  }
+
+  @autobind
+  handleCloseModal() {
+    this.setState({ showingAddModal: false });
   }
 
   @autobind
