@@ -67,6 +67,7 @@ export default class Application extends React.Component {
   @autobind
   seekVideo(time, allowSeekAhead = false) {
     this.refs.player.seek(time, allowSeekAhead);
+    this.updateCurrentTime(time);
   }
 
   @autobind

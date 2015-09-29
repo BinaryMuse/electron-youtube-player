@@ -8,7 +8,7 @@ export default class YoutubePlayer extends React.Component {
   // not as gross! yay
   componentDidMount() {
     this.setupPlayer();
-    this.updateTimeInterval = setInterval(this.updateCurrentPlayerTime, 500);
+    this.updateTimeInterval = setInterval(this.updateCurrentPlayerTime, 100);
   }
 
   componentDidUpdate(prevProps) {
@@ -75,7 +75,7 @@ export default class YoutubePlayer extends React.Component {
   @autobind
   updateCurrentPlayerTime() {
     if (this.player && this.player.getCurrentTime) {
-      const time = Math.floor(this.player.getCurrentTime());
+      const time = Math.floor(this.player.getCurrentTime() * 1000);
       this.props.onUpdateCurrentTime(time);
     }
   }
@@ -96,8 +96,8 @@ export default class YoutubePlayer extends React.Component {
     this.updateCurrentPlayerTime(); // make sure time display is correct right away
   }
 
-  seek(time) {
-    this.player && this.player.seekTo(time, true);
+  seek(time, allowSeekAhead = false) {
+    this.player && this.player.seekTo(time / 1000, allowSeekAhead);
   }
 
   setVolume(volume) {

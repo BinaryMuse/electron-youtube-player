@@ -26,7 +26,8 @@ export default class PlaybackControlBar extends React.Component {
         </div>
         <div style={{flexBasis: "100%", padding: "0px 10px"}}>
           <input type="range" className="slider" style={{width: "100%"}}
-                 min={0} max={this.props.videoDuration}
+                 min={0} max={this.props.videoDuration * 1000}
+                 step={0.1}
                  value={seekSliderValue}
                  onMouseDown={this.handleMouseDown}
                  onMouseUp={this.handleMouseUp}
@@ -47,15 +48,18 @@ export default class PlaybackControlBar extends React.Component {
   }
 
   @autobind
-  handleMouseUp() {
+  handleMouseUp(evt) {
     this.setState({ draggingSeekSlider: false });
+    const time = parseInt(evt.target.value, 10);
+    this.setState({ localCurrentTime: time });
+    this.props.onSeek(time, true);
   }
 
   @autobind
   handleSeekVideo(evt) {
     const time = parseInt(evt.target.value, 10);
     this.setState({ localCurrentTime: time });
-    this.props.onSeek(time, this.state.draggingSeekSlider);
+    this.props.onSeek(time, this.state.draggingSeekSlider ? false : true);
   }
 
   @autobind
