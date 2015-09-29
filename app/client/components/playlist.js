@@ -30,23 +30,65 @@ const ClickableThumbnail = ({videoId, onClick, onClose}) =>
 class Modal extends React.Component {
   render() {
     const style = {
+      color: "black",
       width: 400,
-      height: 100,
       backgroundColor: "white",
-      display: this.props.isOpen ? "block" : "none",
       position: "absolute",
-      top: "50%",
+      top: "30%",
       left: "50%",
       marginLeft: -200,
+      border: "1px solid black",
+      borderRadius: 10,
+      padding: 15,
     };
 
-    return (
-      <div style={style}>
-        {this.props.children}
-        <hr />
-        <button onClick={this.props.onRequestClose}>Close</button>
+    const backdropStyle = {
+      display: this.props.isOpen ? "block" : "none",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(50,50,50,0.8)",
+    };
+
+    let title;
+    if (this.props.title) {
+      const style = {
+        marginTop: 0,
+        borderBottom: "1px solid #ccc",
+        marginBottom: 10,
+        paddingBottom: 5,
+      };
+      title = <h2 style={style}>{this.props.title}</h2>;
+    }
+
+    const closeButton = (
+      <div style={{
+        position: "absolute",
+        right: 5,
+        top: 5,
+        fontSize: 20,
+        padding: "3px 5px",
+        cursor: "pointer",
+      }} onClick={this.props.onRequestClose}>
+        ×
       </div>
     );
+
+    return (
+      <div style={backdropStyle} onClick={this.props.onRequestClose}>
+        <div style={style} onClick={this.eatClick}>
+          {title}
+          {closeButton}
+          {this.props.children}
+        </div>
+      </div>
+    );
+  }
+
+  eatClick(e) {
+    e.stopPropagation();
   }
 }
 
@@ -65,7 +107,8 @@ export default class Playlist extends React.Component {
         {this.props.videoIds.map(this.renderVideoId)}
         <button onClick={this.handleShowAddVideoModalClicked}>Add Video</button>
         <Modal isOpen={this.state.showingAddModal}
-               onRequestClose={this.handleCloseModal}>
+               onRequestClose={this.handleCloseModal}
+               title="Add Video to Playlist">
           <button onClick={this.handleAddVideoClicked}>Add Video</button>
           {/*cheating*/}
           <input type="text" ref="videoId" />
