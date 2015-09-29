@@ -66,7 +66,6 @@ export default class YoutubePlayer extends React.Component {
           if (state === 1) {
             // video just started playing, we should have metadata
             this.props.onUpdateVideoDuration(this.props.videoId, player.getDuration());
-            console.log("updating");
           }
         }
       }
