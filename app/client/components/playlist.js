@@ -61,7 +61,7 @@ export default class Playlist extends React.Component {
 
   render() {
     return (
-      <div style={{flex: "1 0 100%"}}>
+      <div style={{flex: "1", overflowY: "scroll"}}>
         {this.props.videoIds.map(this.renderVideoId)}
         <button onClick={this.handleShowAddVideoModalClicked}>Add Video</button>
         <Modal isOpen={this.state.showingAddModal}
