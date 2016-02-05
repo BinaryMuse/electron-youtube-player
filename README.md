@@ -6,7 +6,7 @@ This is a desktop app created using [Electron](http://electron.atom.io/), writte
 Installing/Running
 ------------------
 
-Requres Node.js. Tested on Node.js 4.0.
+Requires Node.js. Tested on Node.js 4.0.
 
 ```
 npm install
